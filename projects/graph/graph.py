@@ -92,14 +92,14 @@ class Graph:
         This should be done using recursion.
         """
         if visited is None:
-            visited = []
+            visited = set()
         v = starting_vertex
         #check if node has been visited
         #if not:
         if v not in visited:
             #mark as visited
             print(v)
-            visited.append(v)
+            visited.add(v)
             #call dft recursive on each neighbor
             for neighbor in self.get_neighbors(v):
                 self.dft_recursive(neighbor, visited=visited)
