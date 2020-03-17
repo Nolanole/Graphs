@@ -53,10 +53,11 @@ def earliest_ancestor(ancestors, starting_node):
     #construct the graph: each vertex has set of parents and children
     g = Graph()
     g.create_graph_from_tuples(ancestors)
-    # print(g.vertices)
-    parents = g.get_parents(starting_node)
-    if len(parents) == 0:
+
+    #if starting node has no parents, return -1:
+    if len(g.get_parents(starting_node)) == 0:
         return -1
+    
     #initialize longest_path w/ just the starting node
     longest_path = [starting_node]
     #create a set to store the visited vertices
@@ -67,12 +68,15 @@ def earliest_ancestor(ancestors, starting_node):
     s.push([starting_node])
     #while the stack is not empty:
     while s.size() > 0:
+        #pop the latest path and assign to var
         path = s.pop()
+        #grab the last node from the path:
         v = path[-1]
-
+        #if the node has not yet been visited:
         if v not in visited:
+            #mark it as visited
             visited.add(v)
-            #if v has no parents, check if path is >= longest path:
+            #check the node for parents:
             parents = g.get_parents(v)
             #if node has no parents- reached the full depth: check if the len of this path is >= prev longest path
             if len(parents) == 0:
