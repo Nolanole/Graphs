@@ -84,13 +84,15 @@ class Graph:
                 for neighbor in self.get_neighbors(v):
                     s.push(neighbor)
 
-    def dft_recursive(self, starting_vertex, visited=[]):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
+        if visited is None:
+            visited = []
         v = starting_vertex
         #check if node has been visited
         #if not:
@@ -170,7 +172,7 @@ class Graph:
                     # push THE COPY
                     s.push(new_path)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex, prev_path=[]):
+    def dfs_recursive(self, starting_vertex, destination_vertex, prev_path=None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -178,7 +180,8 @@ class Graph:
 
         This should be done using recursion.
         """
-        
+        if prev_path is None:
+            prev_path = []
         #base case: the starting vertex is the vertex we are searching for
         if starting_vertex == destination_vertex:
             return prev_path + [destination_vertex]
@@ -220,7 +223,9 @@ if __name__ == '__main__':
     Should print:
         {1: {2}, 2: {3, 4}, 3: {5}, 4: {6, 7}, 5: {3}, 6: {3}, 7: {1, 6}}
     '''
+    print("Graph vertices")
     print(graph.vertices)
+    print('\n')
 
     '''
     Valid BFT paths:
@@ -236,8 +241,11 @@ if __name__ == '__main__':
         1, 2, 4, 3, 6, 5, 7
         1, 2, 4, 3, 7, 6, 5
         1, 2, 4, 3, 7, 5, 6
+    
     '''
+    print('Breadth first traversal:')
     graph.bft(1)
+    print('\n')
 
     '''
     Valid DFT paths:
@@ -246,19 +254,28 @@ if __name__ == '__main__':
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
     '''
+    print('Depth First traversal')
     graph.dft(1)
+    print('\n')
+    print('Depth first traversal- recursive')
     graph.dft_recursive(1)
+    print('\n')
 
     '''
     Valid BFS path:
         [1, 2, 4, 6]
     '''
+    print('Breadth first search')
     print(graph.bfs(1, 6))
+    print('\n')
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
+    print('Depth first search:')
     print(graph.dfs(1, 6))
+    print('\n')
+    print('Depth first search, recursive:')
     print(graph.dfs_recursive(1, 6))
