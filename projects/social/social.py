@@ -77,7 +77,6 @@ class SocialGraph:
             random.shuffle(combos)
             for i in range(total_friendships // 2):
                 self.add_friendship(combos[i][0], combos[i][1])
-        
 
 
     def get_all_social_paths(self, user_id):
@@ -108,15 +107,16 @@ class SocialGraph:
                 for friend in self.friendships[v]:
                     #add path to each friend to the queue
                     q.append(path[:] + [friend])
-
         return visited
 
 def time_graph_creation(num_users, avg_friendships):
+    #time linear creation
     start = time.time()
     sg = SocialGraph()
     sg.populate_graph(num_users, avg_friendships, linear=True)
     end = time.time()
     linear = end - start
+    #time quadratic creation:
     start = time.time()
     sg = SocialGraph()
     sg.populate_graph(num_users, avg_friendships)
@@ -145,7 +145,7 @@ if __name__ == '__main__':
         for friend in connections.keys():
             #dont count self connection
             if user != friend:
-                separation_degrees.append(len(connections[friend]))
+                separation_degrees.append(len(connections[friend])-1)
     mean_connected_users = mean(num_connected_users)
     avg_degrees_separation = mean(separation_degrees)
     print('In a social network of 1000 users w/ avg of 5 friends:\n')
