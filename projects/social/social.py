@@ -21,8 +21,10 @@ class SocialGraph:
         """
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
+            return -1
         elif friend_id in self.friendships[user_id] or user_id in self.friendships[friend_id]:
             print("WARNING: Friendship already exists")
+            return -1
         else:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
@@ -59,10 +61,21 @@ class SocialGraph:
 
         # Create friendships
         total_friendships = avg_friendships * num_users
-        combos = list(itertools.combinations(self.users.keys(), 2))
-        random.shuffle(combos)
-        for i in range(total_friendships // 2):
-            self.add_friendship(combos[i][0], combos[i][1])
+
+        #O(n^2):
+        # combos = list(itertools.combinations(self.users.keys(), 2))
+        # random.shuffle(combos)
+        # for i in range(total_friendships // 2):
+        #     self.add_friendship(combos[i][0], combos[i][1])
+        
+        #O(n):
+        friendship_count = 0
+        while friendship_count < total_friendships // 2:
+            user1, user2 = random.sample(range(1, num_users+1), 2)
+            attempt = self.add_friendship(user1, user2)
+            if attempt != -1:
+                friendship_count += 1
+
 
     def get_all_social_paths(self, user_id):
         """
@@ -110,16 +123,18 @@ if __name__ == '__main__':
     sg.populate_graph(1000, 5)
     num_connected_users = []
     avg_degrees_separation = []
+    separation_degrees = []
+
     for user in sg.users:
-        separation_degrees = []
         connections = sg.get_all_social_paths(user)
-        num_connected_users.append(len(connections))
+        num_connected_users.append(len(connections)-1) #subtract 1 so we dont count users connection to self
         for friend in connections.keys():
-            separation_degrees.append(len(connections[friend]))
-        avg_degrees_separation.append(mean(separation_degrees))
+            #dont count self connection
+            if user != friend:
+                separation_degrees.append(len(connections[friend]))
     mean_connected_users = mean(num_connected_users)
-    mean_avg_degrees_separation = mean(avg_degrees_separation)
+    avg_degrees_separation = mean(separation_degrees)
     print('In a social network of 1000 users w/ avg of 5 friends:\n')
     print(f'The avg number of connected users per user is {mean_connected_users}, or {round(mean_connected_users / 10, 2)}% of total users\n')
     print('The average degree of separation between a user and those in his/her extended network is:')
-    print(round(mean_avg_degrees_separation, 2))
+    print(round(avg_degrees_separation, 2))
