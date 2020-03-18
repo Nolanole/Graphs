@@ -1,6 +1,13 @@
+import random
+import itertools
+from collections import deque
+from statistics import mean
+
 class User:
     def __init__(self, name):
         self.name = name
+    def __repr__(self):
+        return self.name
 
 class SocialGraph:
     def __init__(self):
@@ -43,10 +50,19 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
+        if avg_friendships >= num_users:
+            return 'error- number of users must be greater than the average number of friendships'
 
         # Add users
+        for i in range(num_users):
+            self.add_user(f'User {i+1}')
 
         # Create friendships
+        total_friendships = avg_friendships * num_users
+        combos = list(itertools.combinations(self.users.keys(), 2))
+        random.shuffle(combos)
+        for i in range(total_friendships // 2):
+            self.add_friendship(combos[i][0], combos[i][1])
 
     def get_all_social_paths(self, user_id):
         """
@@ -58,13 +74,52 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        # create a queue
+        q = deque()
+        #add path to the starting user_id
+        q.append([user_id])
+        #while the queue is not empty
+        while len(q) > 0:
+            #get the current path from the left of the queue (FIFO)
+            path = q.popleft()
+            #get the last node in the path
+            v = path[-1]
+            #check if its been visited- if it hasnt:
+            if v not in visited:
+                #add the path to visited
+                visited[v] = path
+                #get the friends of the last node in current path
+                for friend in self.friendships[v]:
+                    #add path to each friend to the queue
+                    q.append(path[:] + [friend])
+
         return visited
+
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
     sg.populate_graph(10, 2)
-    print(sg.friendships)
+    print(f'Users: {sg.users}\n')
+    print(f'Friendships: {sg.friendships}\n')
     connections = sg.get_all_social_paths(1)
-    print(connections)
+    print(f'Connections: {connections}\n')
+
+    #Question 3 answers
+    sg = SocialGraph()
+    sg.populate_graph(1000, 5)
+    num_connected_users = []
+    avg_degrees_separation = []
+    for user in sg.users:
+        separation_degrees = []
+        connections = sg.get_all_social_paths(user)
+        num_connected_users.append(len(connections))
+        for friend in connections.keys():
+            separation_degrees.append(len(connections[friend]))
+        avg_degrees_separation.append(mean(separation_degrees))
+    mean_connected_users = mean(num_connected_users)
+    mean_avg_degrees_separation = mean(avg_degrees_separation)
+    print('In a social network of 1000 users w/ avg of 5 friends:\n')
+    print(f'The avg number of connected users per user is {mean_connected_users}, or {round(mean_connected_users / 10, 2)}% of total users\n')
+    print('The average degree of separation between a user and those in his/her extended network is:')
+    print(round(mean_avg_degrees_separation, 2))
