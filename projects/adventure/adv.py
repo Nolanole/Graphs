@@ -180,7 +180,7 @@ def bfs(graph, curr_room_id):
                 q.append(new_path)
     
 # TRAVERSAL TEST
-def perform_test():
+def perform_test(print_statement=False):
     player = Player(world.starting_room)
     traversal_path, graph = dft(player)
 
@@ -193,31 +193,37 @@ def perform_test():
         visited_rooms.add(player.current_room)
 
     if len(visited_rooms) == len(room_graph):
-        # print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
-        return traversal_path
+        if print_statement:
+            print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
+        return traversal_path, graph
     else:
         print("TESTS FAILED: INCOMPLETE TRAVERSAL")
         print(f"{len(room_graph) - len(visited_rooms)} unvisited rooms")
 
-    return traversal_path
+
+#Test (MVP)
+traversal_path, graph = perform_test(print_statement=True)
 
 
-### STRETCH GOAL ###
+### STRETCH GOAL ### 
 #Iterate until shortest path < 970
 
 shortest_path = []
 min_length = 9999999999
 
-print('Starting timer - searching for path <= 957 moves!')
+print('Starting timer - searching for path <= 950 moves!')
 start = time.time()
 count = 0
-while min_length > 957:
-    traversal_path = perform_test()
+
+# while min_length > 920:
+
+while count < 1000000:
+    traversal_path, graph = perform_test()
     path_length = len(traversal_path)
     if path_length < min_length:
         shortest_path = traversal_path
         min_length = path_length
-    if count % 5000 == 0:
+    if count % 50000 == 0:
         print(f'After {count} iterations, shortest path found is {min_length} moves.')
     count += 1
 
@@ -227,72 +233,22 @@ runtime = end - start
 print(f'After {runtime} seconds, a path of {min_length} moves was found!')
 print(f'Shortest path: {shortest_path}')
 
-
-#######
-# UNCOMMENT TO WALK AROUND
-#######
-# player.current_room.print_room_description(player)
-# while True:
-#     cmds = input("-> ").lower().split(" ")
-#     if cmds[0] in ["n", "s", "e", "w"]:
-#         player.travel(cmds[0], True)
-#     elif cmds[0] == "q":
-#         break
-#     else:
-#         print("I did not understand that command.")
-
-
 '''
-After 922.4884679317474 seconds, a path of 953 moves was found!
-Shortest path: ['s', 'w', 'e', 'n', 'w', 'w', 's', 'w', 's', 's', 'n', 'n', 'e', 'n', 'e', 'n', 
-'w', 'w', 's', 'n', 'w', 's', 's', 's', 'w', 'n', 'w', 'w', 'w', 'e', 'e', 'e', 's', 'w', 'w', 
-'s', 'w', 'n', 's', 'e', 'n', 'e', 'e', 'e', 's', 'w', 'w', 'e', 's', 'w', 'e', 'n', 'e', 's', 
-'s', 's', 's', 'w', 's', 'w', 's', 'w', 'e', 's', 'w', 'e', 'n', 'n', 'e', 's', 's', 'n', 'n', 
-'n', 'e', 's', 's', 's', 's', 'w', 'e', 'n', 'e', 'e', 's', 's', 'e', 'w', 's', 'w', 'e', 'n', 
-'n', 'n', 'w', 's', 'n', 'w', 'n', 'n', 'n', 'n', 'n', 'w', 's', 'w', 's', 'w', 's', 'n', 'e', 
-'n', 'w', 'w', 's', 's', 's', 's', 's', 'e', 'w', 's', 'e', 'w', 'n', 'n', 'n', 'n', 'w', 'w', 
-'w', 'w', 'e', 'e', 'e', 's', 's', 's', 'w', 'w', 'e', 'e', 's', 'n', 'n', 'w', 'e', 'n', 'w', 
-'e', 'n', 'e', 'n', 'w', 'w', 'e', 'e', 'n', 'w', 'e', 'e', 'e', 'e', 'n', 'w', 'w', 'n', 's', 
-'w', 'w', 'w', 's', 'w', 's', 'n', 'e', 'n', 'e', 'e', 'n', 'w', 'w', 'n', 'w', 'e', 's', 'e', 
-'n', 'n', 'w', 'n', 'w', 'e', 'e', 'n', 'w', 'w', 'e', 'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 
-'n', 'w', 'w', 'e', 'e', 'e', 's', 'n', 'n', 'n', 'w', 'w', 'e', 'n', 'w', 'e', 's', 'e', 's', 
-'e', 'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 'n', 'n', 'w', 'w', 'w', 'n', 'n', 'w', 'n', 's', 
-'e', 's', 's', 'w', 'n', 's', 'w', 'n', 'n', 'n', 'n', 'n', 's', 's', 's', 's', 'w', 'w', 'w', 
-'e', 'e', 'n', 'n', 'n', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 's', 's', 'w', 'n', 'n', 's', 
-'s', 'w', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 'w', 'w', 's', 'w', 'e', 'n', 'w', 'e', 'e', 
-'e', 'e', 'e', 's', 'e', 's', 'e', 'e', 'e', 'e', 'n', 'w', 'n', 's', 'e', 'n', 'n', 'w', 'w', 
-'n', 'w', 'e', 's', 'e', 'n', 's', 'e', 's', 's', 's', 'e', 'e', 's', 'n', 'n', 'n', 'n', 'n', 
-'n', 'e', 'w', 'n', 'w', 'n', 'n', 's', 'w', 'n', 's', 'e', 's', 'w', 'w', 'n', 'n', 'n', 'n', 
-'s', 's', 's', 'w', 'n', 'n', 'w', 'e', 's', 's', 'e', 's', 'w', 's', 'w', 'e', 'n', 'w', 'w', 
-'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 'e', 'e', 'e', 'n', 'n', 's', 's', 'w', 'n', 'n', 'n', 
-'e', 'n', 'w', 'w', 'e', 'e', 's', 'e', 'n', 'e', 'e', 'w', 'w', 's', 's', 's', 's', 'e', 'n', 
-'n', 'n', 's', 's', 'e', 'n', 'n', 's', 'e', 'n', 'e', 'e', 'w', 's', 'n', 'w', 'n', 's', 's', 
-'w', 's', 'w', 's', 's', 'e', 'n', 'e', 'n', 's', 'e', 'n', 's', 'e', 'w', 'w', 'w', 's', 'e', 
-'w', 'w', 's', 'e', 'w', 'w', 'n', 's', 'w', 'w', 's', 'e', 'e', 'w', 'w', 's', 'w', 'n', 'n', 
-'w', 'n', 'w', 'e', 'e', 'w', 's', 'e', 's', 's', 'e', 's', 's', 'w', 'n', 's', 's', 'w', 'e', 
-'s', 'e', 's', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'w', 'w', 's', 'e', 'e', 'e', 'n', 's', 'e', 
-'w', 'w', 'w', 'w', 'n', 'w', 's', 'n', 'w', 'n', 'e', 'n', 'e', 'n', 'e', 'e', 'e', 'e', 'w', 
-'n', 'e', 'w', 's', 'w', 's', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'n', 'w', 's', 'n', 'w', 
-'n', 'e', 'n', 'n', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 's', 's', 'e', 'n', 'e', 'w', 's', 
-'w', 'w', 's', 's', 'w', 's', 'e', 'e', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'w', 'w', 'w', 
-'s', 'w', 's', 's', 's', 'n', 'n', 'e', 's', 'e', 'e', 's', 'e', 'e', 'e', 'w', 's', 'n', 'w', 
-'w', 's', 's', 'e', 'n', 's', 'e', 'w', 'w', 's', 's', 'e', 'e', 'w', 'w', 'n', 'e', 'e', 'w', 
-'w', 'n', 'n', 'n', 'n', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'w', 's', 'e', 'w', 'n', 'n', 'w', 
-'n', 'w', 'n', 'e', 'n', 'e', 'n', 'n', 'n', 'n', 's', 's', 's', 'e', 'n', 'n', 'n', 's', 'e', 
-'n', 'n', 'e', 'e', 'e', 'e', 'w', 'n', 's', 'w', 'n', 's', 'w', 'n', 's', 'w', 's', 's', 'w', 
-'s', 's', 'w', 's', 'w', 's', 'w', 'n', 'n', 'n', 'n', 's', 's', 'e', 'n', 'n', 's', 's', 'w', 
-'s', 's', 's', 'w', 's', 'w', 'n', 's', 'e', 'e', 'w', 's', 's', 's', 's', 's', 's', 's', 'n', 
-'e', 's', 's', 'w', 's', 's', 'n', 'n', 'e', 's', 's', 's', 's', 's', 'n', 'n', 'w', 's', 'n', 
-'e', 'n', 'n', 'e', 's', 's', 's', 'n', 'n', 'e', 's', 's', 'n', 'n', 'e', 's', 's', 'n', 'n', 
-'w', 'w', 'n', 'e', 'e', 'n', 'e', 'e', 'e', 'w', 's', 's', 's', 's', 'n', 'n', 'e', 'w', 'n', 
-'n', 'w', 's', 's', 'n', 'n', 'w', 's', 'w', 'w', 'w', 'n', 'n', 'n', 'w', 'n', 'n', 'n', 'e', 
-'e', 's', 'e', 'n', 'e', 's', 's', 'n', 'n', 'w', 's', 'w', 's', 's', 's', 's', 'e', 'w', 'n', 
-'n', 'n', 'e', 's', 'e', 'w', 's', 'e', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'n', 'n', 'w', 'n', 
-'n', 'w', 's', 's', 'n', 'n', 'w', 'n', 'w', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 
-'n', 'n', 'n', 'n', 'n', 'w', 'w', 's', 'w', 's', 'n', 'e', 'e', 's', 's', 's', 'n', 'n', 'n', 
-'w', 's', 'n', 'n', 'w', 'n', 's', 'e', 'e', 'n', 'n', 'w', 'e', 'n', 'n', 'n', 'e', 'w', 'w', 
-'e', 's', 'w', 'e', 's', 'w', 'w', 's', 'n', 'e', 'e', 's', 's', 'w', 'e', 'n', 'n', 'n', 'n', 
-'e', 'e', 'n', 'e', 's', 'n', 'w', 'n', 'n', 'n', 'w', 'w', 'w', 'n', 's', 'w', 'w', 'w', 'w', 
-'w', 'w', 'n', 'w', 'n', 'w', 'w', 'w', 'e', 'e', 'e', 'n', 's', 's', 'w', 'w', 'e', 's', 'n', 
-'e', 'e', 'n', 's', 's', 'w']
+TESTS PASSED: 990 moves, 500 rooms visited
+Starting timer - searching for path <= 950 moves!
+After 0 iterations, shortest path found is 990 moves.
+After 25000 iterations, shortest path found is 957 moves.
+After 172.85091471672058 seconds, a path of 950 moves was found!
+Shortest path: ['w', 'w', 's', 'w', 's', 's', 'n', 'n', 'e', 'n', 'e', 'n', 'w', 'w', 's', 'n', 'w', 's', 's', 's', 'w', 'n', 'w', 'w', 'w', 'e', 'e', 'e', 's', 'w', 'w', 's', 'w', 'n', 's', 'e', 'n', 'e', 'e', 'e', 's', 'w', 'w', 'e', 's', 'w', 'e', 'n', 'e', 's', 's', 's', 's', 's', 's', 's', 'e', 'e', 's', 's', 's', 'w', 'e', 'n', 'e', 'w', 'n', 'n', 'w', 's', 'n', 'w', 's', 'w', 'e', 'n', 'n', 'n', 'n', 'w', 's', 'w', 's', 's', 'w', 'e', 'n', 'w', 'e', 'n', 'e', 's', 's', 'n', 'n', 'n', 'e', 'n', 'n', 'w', 's', 'w', 's', 'w', 's', 'n', 'e', 'n', 'w', 'w', 's', 's', 's', 's', 's', 'e', 'w', 's', 'e', 'w', 'n', 'n', 'n', 'n', 'w', 'w', 'w', 'w', 'e', 'e', 'e', 's', 'w', 'e', 's', 's', 's', 'n', 'w', 'w', 'e', 'e', 'n', 'w', 'e', 'n', 'n', 'e', 'n', 'w', 'w', 'e', 'e', 'n', 'w', 'e', 'e', 'e', 'e', 'n', 'w', 'w', 'n', 's', 'w', 'w', 'w', 's', 'w', 's', 'n', 'e', 'n', 'e', 'e', 'n', 'w', 'w', 'n', 'w', 'e', 's', 'e', 'n', 'n', 'w', 'n', 'w', 'e', 'e', 'n', 'w', 'n', 's', 'w', 'e', 'e', 'n', 's', 'e', 'e', 'e', 'n', 'w', 'w', 'e', 'e', 'e', 's', 'n', 'n', 'w', 'w', 'w', 'w', 'e', 'n', 'n', 's', 'w', 'w', 'w', 'e', 's', 'n', 'e', 'n', 'n', 's', 'w', 'w', 'w', 'e', 'e', 'e', 's', 'e', 's', 'e', 'e', 'e', 'n', 'w', 'w', 'e', 'n', 'w', 'e', 's', 'e', 's', 'e', 'n', 's', 'e', 'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 's', 'e', 'e', 's', 'e', 's', 'e', 'e', 's', 's', 's', 's', 's', 'e', 'e', 'w', 'w', 'n', 'e', 'e', 'w', 'w', 'n', 'e', 'n', 's', 'e', 'w', 'w', 'n', 'n', 'e', 'e', 'e', 'w', 's', 'n', 'w', 'w', 'n', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'w', 's', 'e', 'w', 'n', 'n', 'w', 's', 's', 'n', 'n', 'n', 'e', 'e', 's', 'n', 'e', 'e', 'e', 'w', 'w', 's', 'e', 'e', 'e', 'n', 's', 'e', 'w', 'w', 'w', 'w', 'n', 'w', 'w', 'n', 'e', 'e', 'e', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'w', 'w', 'n', 'e', 'n', 'e', 's', 'n', 'e', 'e', 'e', 'w', 'n', 'e', 'w', 's', 'w', 's', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'n', 'w', 'w', 'n', 'e', 'e', 'n', 'e', 'w', 's', 'w', 'n', 'n', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 's', 's', 'w', 's', 's', 'w', 's', 'w', 's', 'w', 'w', 'n', 'e', 'n', 'e', 'n', 'e', 'n', 'n', 'e', 'n', 'n', 'e', 'n', 's', 'e', 'n', 's', 'e', 'n', 's', 'e', 'w', 'w', 'w', 'w', 's', 's', 'w', 'n', 's', 's', 's', 'w', 'n', 'n', 'n', 's', 's', 's', 's', 'w', 's', 'w', 'n', 'n', 'n', 'n', 's', 's', 'e', 'n', 'n', 's', 's', 'w', 's', 's', 's', 'w', 's', 'w', 'n', 's', 's', 'w', 'e', 'n', 'e', 'e', 'w', 's', 's', 's', 'e', 's', 's', 'n', 'n', 'e', 's', 'e', 'n', 'e', 's', 's', 'n', 'n', 'w', 's', 'w', 's', 's', 's', 's', 'e', 'w', 'n', 'n', 'n', 'e', 's', 'e', 'w', 's', 'e', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'n', 'n', 'w', 'n', 'n', 'w', 'w', 's', 's', 's', 's', 'n', 'e', 's', 's', 's', 'e', 'e', 'e', 'n', 'e', 'e', 's', 's', 's', 's', 'n', 'n', 'e', 'w', 'n', 'n', 'e', 'w', 'w', 's', 's', 'n', 'n', 'w', 's', 'w', 'w', 's', 'e', 'e', 's', 's', 'n', 'n', 'w', 's', 's', 'n', 'n', 'w', 's', 's', 'n', 'n', 'n', 'w', 's', 's', 's', 's', 'n', 'n', 'w', 's', 'n', 'e', 'n', 'n', 'n', 'w', 's', 's', 'n', 'n', 'e', 'n', 'n', 'w', 'n', 'n', 'n', 'n', 'w', 'w', 'w', 'e', 's', 'w', 'e', 's', 'w', 'w', 's', 'n', 'e', 'e', 's', 'w', 'e', 's', 'w', 'e', 's', 'w', 's', 'w', 's', 'n', 'e', 'e', 's', 's', 's', 'n', 'n', 'n', 'w', 's', 'n', 'n', 'w', 'n', 's', 'e', 'e', 'e', 's', 's', 's', 's', 's', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'e', 'n', 'e', 's', 'n', 'w', 'n', 'n', 'n', 'w', 'n', 'w', 'e', 'n', 'w', 'n', 'n', 'n', 'w', 'n', 's', 'w', 'n', 'w', 'e', 's', 'e', 'e', 's', 's', 'w', 'n', 's', 'e', 's', 'w', 'w', 'n', 'n', 'w', 'n', 's', 'e', 's', 's', 'w', 'n', 's', 'w', 'n', 'n', 'n', 'n', 'n', 's', 's', 's', 's', 'w', 'w', 'w', 'e', 'e', 'n', 'n', 'n', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 's', 's', 'w', 'n', 'n', 's', 's', 'w', 'w', 'w', 's', 'w', 'e', 'n', 'w', 'e', 'e', 'e', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 'e', 'e', 's', 'e', 's', 'e', 'e', 'e', 'e', 'e', 'n', 's', 'e', 's', 'n', 'n', 'n', 'w', 'n', 'n', 'w', 'n', 'e', 'w', 'w', 'e', 's', 'e', 's', 's', 'e', 'n', 'n', 'e', 'e', 'e', 'n', 'n', 'w', 'n', 'n', 'n', 'n', 'e', 'e', 'w', 'w', 's', 'w', 'w', 's', 's', 's', 'w', 'n', 'w', 'n', 's', 'e', 'n', 's', 's', 'w', 'w', 'w', 'w', 'w', 'n', 's', 'e', 'n', 's', 'e', 's', 'w', 'e', 'n', 'e', 'n', 'w', 'n', 'n', 'w', 'e', 's', 's', 'e', 'n', 'n', 'n', 's', 's', 's', 's', 'e', 'e', 'e', 's', 'e', 'w', 's', 's', 'e', 'e', 'w', 'w', 'n', 'n', 'n', 'e', 'n', 'n', 's', 's', 'w', 'n', 'n', 'n', 'e', 'n', 'w', 'w', 'e', 'e', 's', 'e', 's', 's', 's', 'e', 'n', 'e', 'n', 'e', 'n', 'n', 's', 'e', 's', 'n', 'e', 'w', 'w', 's', 'w', 'n', 's', 's', 'w', 'n', 'n', 's', 's', 's', 's', 'e', 'e', 'w', 'n', 'e', 'n', 's', 'e', 'e', 'w', 'n', 's', 'w', 'w', 's', 'w', 's', 'e', 'w', 'w', 'n']
 '''
+
+
+#extra messing around: once the full map is known (graph is populated):
+#find the optimal traversal path using BFS
+
+# player = Player(world.starting_room)
+# curr_room_id = player.current_room.id
+# visited_rooms = set()
+# visited_rooms.add(curr_room)
+# while len(visited_room < 500):
+#     path = bfs()
