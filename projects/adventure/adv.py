@@ -201,32 +201,25 @@ def perform_test():
 
     return traversal_path
 
+
 ### STRETCH GOAL ###
 #Iterate until shortest path < 970
 
 shortest_path = []
 min_length = 9999999999
-n = 1
-
-# for _ in range(n):
 
 print('Starting timer - searching for path <= 957 moves!')
 start = time.time()
-# count = 0
+count = 0
 while min_length > 957:
     traversal_path = perform_test()
     path_length = len(traversal_path)
     if path_length < min_length:
         shortest_path = traversal_path
         min_length = path_length
-    # count += 1
-    # if count % 1000 == 0:
-    #     print(f'After {count} iterations, shortest path found is {min_length} moves.')
-
-#      if _ % 1000 == 0:
-#         print(f'After {_} iterations, the shortest path found is {min_length} moves!')
-
-# print(f'After {n} iterations, the shortest path found is {min_length} moves!')
+    if count % 5000 == 0:
+        print(f'After {count} iterations, shortest path found is {min_length} moves.')
+    count += 1
 
 end = time.time()
 runtime = end - start
@@ -247,3 +240,59 @@ print(f'Shortest path: {shortest_path}')
 #         break
 #     else:
 #         print("I did not understand that command.")
+
+
+'''
+After 922.4884679317474 seconds, a path of 953 moves was found!
+Shortest path: ['s', 'w', 'e', 'n', 'w', 'w', 's', 'w', 's', 's', 'n', 'n', 'e', 'n', 'e', 'n', 
+'w', 'w', 's', 'n', 'w', 's', 's', 's', 'w', 'n', 'w', 'w', 'w', 'e', 'e', 'e', 's', 'w', 'w', 
+'s', 'w', 'n', 's', 'e', 'n', 'e', 'e', 'e', 's', 'w', 'w', 'e', 's', 'w', 'e', 'n', 'e', 's', 
+'s', 's', 's', 'w', 's', 'w', 's', 'w', 'e', 's', 'w', 'e', 'n', 'n', 'e', 's', 's', 'n', 'n', 
+'n', 'e', 's', 's', 's', 's', 'w', 'e', 'n', 'e', 'e', 's', 's', 'e', 'w', 's', 'w', 'e', 'n', 
+'n', 'n', 'w', 's', 'n', 'w', 'n', 'n', 'n', 'n', 'n', 'w', 's', 'w', 's', 'w', 's', 'n', 'e', 
+'n', 'w', 'w', 's', 's', 's', 's', 's', 'e', 'w', 's', 'e', 'w', 'n', 'n', 'n', 'n', 'w', 'w', 
+'w', 'w', 'e', 'e', 'e', 's', 's', 's', 'w', 'w', 'e', 'e', 's', 'n', 'n', 'w', 'e', 'n', 'w', 
+'e', 'n', 'e', 'n', 'w', 'w', 'e', 'e', 'n', 'w', 'e', 'e', 'e', 'e', 'n', 'w', 'w', 'n', 's', 
+'w', 'w', 'w', 's', 'w', 's', 'n', 'e', 'n', 'e', 'e', 'n', 'w', 'w', 'n', 'w', 'e', 's', 'e', 
+'n', 'n', 'w', 'n', 'w', 'e', 'e', 'n', 'w', 'w', 'e', 'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 
+'n', 'w', 'w', 'e', 'e', 'e', 's', 'n', 'n', 'n', 'w', 'w', 'e', 'n', 'w', 'e', 's', 'e', 's', 
+'e', 'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 'n', 'n', 'w', 'w', 'w', 'n', 'n', 'w', 'n', 's', 
+'e', 's', 's', 'w', 'n', 's', 'w', 'n', 'n', 'n', 'n', 'n', 's', 's', 's', 's', 'w', 'w', 'w', 
+'e', 'e', 'n', 'n', 'n', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 's', 's', 'w', 'n', 'n', 's', 
+'s', 'w', 'n', 'n', 'n', 's', 's', 'w', 'e', 's', 'w', 'w', 's', 'w', 'e', 'n', 'w', 'e', 'e', 
+'e', 'e', 'e', 's', 'e', 's', 'e', 'e', 'e', 'e', 'n', 'w', 'n', 's', 'e', 'n', 'n', 'w', 'w', 
+'n', 'w', 'e', 's', 'e', 'n', 's', 'e', 's', 's', 's', 'e', 'e', 's', 'n', 'n', 'n', 'n', 'n', 
+'n', 'e', 'w', 'n', 'w', 'n', 'n', 's', 'w', 'n', 's', 'e', 's', 'w', 'w', 'n', 'n', 'n', 'n', 
+'s', 's', 's', 'w', 'n', 'n', 'w', 'e', 's', 's', 'e', 's', 'w', 's', 'w', 'e', 'n', 'w', 'w', 
+'n', 's', 'e', 'n', 's', 'e', 'e', 'e', 'e', 'e', 'e', 'n', 'n', 's', 's', 'w', 'n', 'n', 'n', 
+'e', 'n', 'w', 'w', 'e', 'e', 's', 'e', 'n', 'e', 'e', 'w', 'w', 's', 's', 's', 's', 'e', 'n', 
+'n', 'n', 's', 's', 'e', 'n', 'n', 's', 'e', 'n', 'e', 'e', 'w', 's', 'n', 'w', 'n', 's', 's', 
+'w', 's', 'w', 's', 's', 'e', 'n', 'e', 'n', 's', 'e', 'n', 's', 'e', 'w', 'w', 'w', 's', 'e', 
+'w', 'w', 's', 'e', 'w', 'w', 'n', 's', 'w', 'w', 's', 'e', 'e', 'w', 'w', 's', 'w', 'n', 'n', 
+'w', 'n', 'w', 'e', 'e', 'w', 's', 'e', 's', 's', 'e', 's', 's', 'w', 'n', 's', 's', 'w', 'e', 
+'s', 'e', 's', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'w', 'w', 's', 'e', 'e', 'e', 'n', 's', 'e', 
+'w', 'w', 'w', 'w', 'n', 'w', 's', 'n', 'w', 'n', 'e', 'n', 'e', 'n', 'e', 'e', 'e', 'e', 'w', 
+'n', 'e', 'w', 's', 'w', 's', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'n', 'w', 's', 'n', 'w', 
+'n', 'e', 'n', 'n', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 's', 's', 'e', 'n', 'e', 'w', 's', 
+'w', 'w', 's', 's', 'w', 's', 'e', 'e', 'e', 'e', 'e', 's', 'n', 'w', 'w', 'w', 'w', 'w', 'w', 
+'s', 'w', 's', 's', 's', 'n', 'n', 'e', 's', 'e', 'e', 's', 'e', 'e', 'e', 'w', 's', 'n', 'w', 
+'w', 's', 's', 'e', 'n', 's', 'e', 'w', 'w', 's', 's', 'e', 'e', 'w', 'w', 'n', 'e', 'e', 'w', 
+'w', 'n', 'n', 'n', 'n', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'w', 's', 'e', 'w', 'n', 'n', 'w', 
+'n', 'w', 'n', 'e', 'n', 'e', 'n', 'n', 'n', 'n', 's', 's', 's', 'e', 'n', 'n', 'n', 's', 'e', 
+'n', 'n', 'e', 'e', 'e', 'e', 'w', 'n', 's', 'w', 'n', 's', 'w', 'n', 's', 'w', 's', 's', 'w', 
+'s', 's', 'w', 's', 'w', 's', 'w', 'n', 'n', 'n', 'n', 's', 's', 'e', 'n', 'n', 's', 's', 'w', 
+'s', 's', 's', 'w', 's', 'w', 'n', 's', 'e', 'e', 'w', 's', 's', 's', 's', 's', 's', 's', 'n', 
+'e', 's', 's', 'w', 's', 's', 'n', 'n', 'e', 's', 's', 's', 's', 's', 'n', 'n', 'w', 's', 'n', 
+'e', 'n', 'n', 'e', 's', 's', 's', 'n', 'n', 'e', 's', 's', 'n', 'n', 'e', 's', 's', 'n', 'n', 
+'w', 'w', 'n', 'e', 'e', 'n', 'e', 'e', 'e', 'w', 's', 's', 's', 's', 'n', 'n', 'e', 'w', 'n', 
+'n', 'w', 's', 's', 'n', 'n', 'w', 's', 'w', 'w', 'w', 'n', 'n', 'n', 'w', 'n', 'n', 'n', 'e', 
+'e', 's', 'e', 'n', 'e', 's', 's', 'n', 'n', 'w', 's', 'w', 's', 's', 's', 's', 'e', 'w', 'n', 
+'n', 'n', 'e', 's', 'e', 'w', 's', 'e', 'e', 'e', 'e', 'w', 'w', 'w', 'w', 'n', 'n', 'w', 'n', 
+'n', 'w', 's', 's', 'n', 'n', 'w', 'n', 'w', 's', 's', 's', 's', 's', 's', 's', 's', 's', 's', 
+'n', 'n', 'n', 'n', 'n', 'w', 'w', 's', 'w', 's', 'n', 'e', 'e', 's', 's', 's', 'n', 'n', 'n', 
+'w', 's', 'n', 'n', 'w', 'n', 's', 'e', 'e', 'n', 'n', 'w', 'e', 'n', 'n', 'n', 'e', 'w', 'w', 
+'e', 's', 'w', 'e', 's', 'w', 'w', 's', 'n', 'e', 'e', 's', 's', 'w', 'e', 'n', 'n', 'n', 'n', 
+'e', 'e', 'n', 'e', 's', 'n', 'w', 'n', 'n', 'n', 'w', 'w', 'w', 'n', 's', 'w', 'w', 'w', 'w', 
+'w', 'w', 'n', 'w', 'n', 'w', 'w', 'w', 'e', 'e', 'e', 'n', 's', 's', 'w', 'w', 'e', 's', 'n', 
+'e', 'e', 'n', 's', 's', 'w']
+'''
